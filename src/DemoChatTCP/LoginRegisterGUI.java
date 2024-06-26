@@ -3,6 +3,7 @@ package DemoChatTCP;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -53,10 +54,8 @@ public class LoginRegisterGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String username = txtUsername.getText();
                 String password = new String(txtPassword.getPassword());
-                String encryptedPassword = EncryptionUtil.encrypt(password); // Encrypt password
-
                 UserDAO userDAO = new UserDAO();
-                if (userDAO.register(username, encryptedPassword)) {
+                if (userDAO.register(username, password)) {
                     JOptionPane.showMessageDialog(null, "Registration Successful");
                 } else {
                     JOptionPane.showMessageDialog(null, "Registration Failed");
@@ -70,13 +69,11 @@ public class LoginRegisterGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String username = txtUsername.getText();
                 String password = new String(txtPassword.getPassword());
-                String encryptedPassword = EncryptionUtil.encrypt(password); // Encrypt password
-
                 UserDAO userDAO = new UserDAO();
-                if (userDAO.login(username, encryptedPassword)) {
+                if (userDAO.login(username, password)) {
                     JOptionPane.showMessageDialog(null, "Login Successful");
-                    new ClientChatter(username).setVisible(true); // Open main application window
-                    dispose(); // Close login window
+                    new ClientChatter(username).setVisible(true);
+                    dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Login Failed");
                 }

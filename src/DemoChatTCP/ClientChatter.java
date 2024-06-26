@@ -97,7 +97,7 @@ public class ClientChatter extends JFrame {
                 staffName = txtStaff.getText();
                 try {
                     mngSocket = new Socket(mngIP, mngPort);
-                    if (mngSocket != null) {
+                    if (mngSocket != null) {	
                         ChatPanel p = new ChatPanel(mngSocket, staffName, "Manager");
                         thisFrame.getContentPane().add(p);
                         p.getTxtMessages().append("Manager is running");
