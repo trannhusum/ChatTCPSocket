@@ -19,34 +19,26 @@ public class ClientChatter extends JFrame {
     private JTextField txtServerIP;
     private JTextField txtServerPort;
 
-    Socket mngSocket = null;
-    String mngIP = "";
-    int mngPort = 0;
-    String staffName = "";
-    BufferedReader bf = null;
-    DataOutputStream os = null;
-    OuputThread t = null;
+    private Socket mngSocket = null;
+    private String mngIP = "";
+    private int mngPort = 0;
+    private String staffName = "";
+    private BufferedReader bf = null;
+    private DataOutputStream os = null;
+    private OutputThread t = null;
     private String username;
 
-    /**
-     * Launch the application.
-     */
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    ClientChatter frame = new ClientChatter();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-//                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                ClientChatter frame = new ClientChatter();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
 
-    /**
-     * Create the frame.
-     */
     public ClientChatter(String username) {
         this.username = username;
         initialize();
@@ -117,14 +109,15 @@ public class ClientChatter extends JFrame {
                         os.write(13);
                         os.write(10);
                         os.flush();
+                        t = new OutputThread(mngSocket, bf, p.getTxtMessages());
+                        t.start();
                     }
-
-
                 } catch (Exception e2) {
-//                    e2.printStackTrace();
+                    e2.printStackTrace();
                 }
             }
         });
         panel.add(btnConnect);
+        this.setSize(600, 400);
     }
 }

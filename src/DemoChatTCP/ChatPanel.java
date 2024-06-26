@@ -16,7 +16,7 @@ public class ChatPanel extends JPanel {
     Socket socket = null;
     BufferedReader bf = null;
     DataOutputStream os = null;
-    OuputThread t = null;
+    OutputThread t = null;
     String sender;
     String receiver;
     JTextArea txtMessages;
@@ -75,11 +75,11 @@ public class ChatPanel extends JPanel {
         try {
             bf = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             os = new DataOutputStream(socket.getOutputStream());
-            t = new OuputThread(s, txtMessages, sender, receiver);
+            t = new OutputThread(socket, bf, txtMessages);
             t.start();
 
         } catch (Exception e) {
-//          e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
